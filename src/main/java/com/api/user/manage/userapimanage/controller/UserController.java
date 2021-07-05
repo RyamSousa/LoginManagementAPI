@@ -30,12 +30,9 @@ public class UserController {
         return ResponseEntity.ok(userService.update(userDTO));
     }
 
-    @ResponseStatus
-    @DeleteMapping(value = "/{id}")
-    public void delete(@PathVariable Long id){
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(id);
-        userService.delete(userDTO);
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> delete(@PathVariable Long id){
+        return ResponseEntity.ok(userService.delete(id));
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,6 +42,6 @@ public class UserController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable Long id){
-        return ResponseEntity.ok(userService.getById(id));
+        return ResponseEntity.ok(userService.findById(id));
     }
 }

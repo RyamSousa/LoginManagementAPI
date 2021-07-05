@@ -38,4 +38,14 @@ public class UserMapper {
 
         return userDTO;
     }
+
+    public User toOptionalUser(Optional<User> userExists) {
+        User user = new User();
+
+        user.setId(userExists.get().getId());
+        user.setEmail(userExists.get().getEmail());
+        user.setPassword(userExists.get().getPassword());
+
+        return user;
+    }
 }
