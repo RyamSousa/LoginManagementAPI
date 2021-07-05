@@ -1,31 +1,29 @@
 package com.api.user.manage.userapimanage.controller;
 
 import com.api.user.manage.userapimanage.dto.UserDTO;
-import com.api.user.manage.userapimanage.dto.UserMessageDTO;
 import com.api.user.manage.userapimanage.service.UserService;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import lombok.AllArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping(value = "/api/v1/user")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
     private UserService userService;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public UserMessageDTO createUser(@RequestBody UserDTO userDTO){
-        return userService.createUser(userDTO);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO){
+        return ResponseEntity.ok(userService.save(userDTO));
     }
-
-    @GetMapping
-    public List<UserDTO> listAll(){
-        return userService.listAll();
-    }
-
 }
