@@ -4,6 +4,8 @@ import com.api.user.manage.userapimanage.dto.UserDTO;
 import com.api.user.manage.userapimanage.entity.User;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class UserMapper {
 
@@ -23,6 +25,16 @@ public class UserMapper {
         userDTO.setId(user.getId());
         userDTO.setEmail(user.getEmail());
         userDTO.setPassword(user.getPassword());
+
+        return userDTO;
+    }
+
+    public UserDTO toOptionalDTO(Optional<User> user) {
+        UserDTO userDTO = new UserDTO();
+
+        userDTO.setId(user.get().getId());
+        userDTO.setEmail(user.get().getEmail());
+        userDTO.setPassword(user.get().getPassword());
 
         return userDTO;
     }

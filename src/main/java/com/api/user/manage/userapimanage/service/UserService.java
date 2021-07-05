@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -51,5 +52,14 @@ public class UserService {
         User user = userMapper.toUser(userDTO);
 
         userRepository.delete(user);
+    }
+
+    @Transactional
+    public UserDTO getById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+
+        UserDTO userDTO = userMapper.toOptionalDTO(user);
+
+        return userDTO;
     }
 }
