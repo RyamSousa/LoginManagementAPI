@@ -62,4 +62,12 @@ public class UserService {
 
         return userDTO;
     }
+
+    @Transactional
+    public UserDTO update(UserDTO userDTO) {
+        User user = userMapper.toUser(userDTO);
+        userRepository.save(user);
+
+        return userDTO;
+    }
 }
