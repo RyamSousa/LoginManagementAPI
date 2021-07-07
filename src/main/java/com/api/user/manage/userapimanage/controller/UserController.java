@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @RestController
@@ -21,12 +23,12 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO){
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         return ResponseEntity.ok(userService.save(userDTO));
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> update(@Valid @RequestBody UserDTO userDTO){
+    public ResponseEntity<UserDTO> update(@Valid @RequestBody UserDTO userDTO) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         return ResponseEntity.ok(userService.update(userDTO));
     }
 

@@ -6,6 +6,7 @@ import com.api.user.manage.userapimanage.exception.UserException;
 import com.api.user.manage.userapimanage.mapper.UserMapper;
 import com.api.user.manage.userapimanage.repository.UserRepository;
 
+import com.api.user.manage.userapimanage.security.PasswordHash;
 import com.api.user.manage.userapimanage.util.MessageUtil;
 import lombok.AllArgsConstructor;
 
@@ -15,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +30,10 @@ public class UserService {
     private UserMapper userMapper;
 
     @Transactional
-    public UserDTO save(UserDTO userDTO){
+    public UserDTO save(UserDTO userDTO) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        // Cria hash da senha
+        String passSave = PasswordHash.passwordToHash(userDTO.getPassword());
+        userDTO.setPassword(passSave);
 
         Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 
@@ -76,7 +82,11 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO update(UserDTO userDTO) {
+    public UserDTO update(UserDTO userDTO) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        // Cria hash da senha
+        String passSave = PasswordHash.passwordToHash(userDTO.getPassword());
+        userDTO.setPassword(passSave);
+
         User user = userMapper.toUser(userDTO);
         userRepository.save(user);
 
