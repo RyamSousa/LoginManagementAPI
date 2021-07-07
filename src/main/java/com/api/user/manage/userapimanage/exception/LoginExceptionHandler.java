@@ -8,10 +8,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 
 @ControllerAdvice
-public class UserExceptionHandler extends ResponseEntityExceptionHandler {
+public class LoginExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(UserException.class)
-    protected ResponseEntity<UserMessageException> handle(UserException e){
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new UserMessageException(e.getMessage()));
+    @ExceptionHandler(LoginException.class)
+    protected ResponseEntity<LoginMessageException> handle(LoginException e){
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new LoginMessageException(e.getMessage()));
     }
 }

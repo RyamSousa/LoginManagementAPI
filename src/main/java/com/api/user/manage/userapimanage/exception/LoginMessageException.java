@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor()
-public class UserMessageException {
+public class LoginMessageException {
 
     private String message;
 }
