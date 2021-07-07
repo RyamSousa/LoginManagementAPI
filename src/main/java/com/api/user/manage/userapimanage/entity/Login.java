@@ -11,8 +11,8 @@ import javax.persistence.GenerationType;
 
 @Entity
 @Data
-@Table(name = "tb_users")
-public class User {
+@Table(name = "tb_login")
+public class Login {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

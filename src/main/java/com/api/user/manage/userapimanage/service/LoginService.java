@@ -1,7 +1,7 @@
 package com.api.user.manage.userapimanage.service;
 
 import com.api.user.manage.userapimanage.dto.LoginDTO;
-import com.api.user.manage.userapimanage.entity.User;
+import com.api.user.manage.userapimanage.entity.Login;
 import com.api.user.manage.userapimanage.exception.LoginException;
 import com.api.user.manage.userapimanage.mapper.LoginMapper;
 import com.api.user.manage.userapimanage.repository.LoginRepository;
@@ -34,9 +34,9 @@ public class LoginService {
         String passSave = PasswordHash.passwordToHash(loginDTO.getPassword());
         loginDTO.setPassword(passSave);
 
-        Optional<User> userExists = loginRepository.findByEmail(loginDTO.getEmail());
+        Optional<Login> loginExists = loginRepository.findByEmail(loginDTO.getEmail());
 
-        if(userExists.isPresent()){
+        if(loginExists.isPresent()){
             throw new LoginException(MessageUtil.USER_ALREADY_EXISTS);
         }
 
@@ -44,9 +44,9 @@ public class LoginService {
             throw new LoginException(MessageUtil.INVALID_EMAIL);
         }
 
-        User user = loginMapper.toUser(loginDTO);
-        loginRepository.save(user);
-        loginDTO = loginMapper.toUserDTO(user);
+        Login login = loginMapper.toUser(loginDTO);
+        loginRepository.save(login);
+        loginDTO = loginMapper.toUserDTO(login);
 
         return loginDTO;
     }
@@ -54,16 +54,16 @@ public class LoginService {
 
     @Transactional(readOnly = true)
     public List<LoginDTO> findAll() {
-        List<LoginDTO> usersDTO = new ArrayList<>();
-        List<User> users = new ArrayList<>();
+        List<LoginDTO> loginDTO = new ArrayList<>();
+        List<Login> logins = new ArrayList<>();
 
-        users = loginRepository.findAll();
+        logins = loginRepository.findAll();
 
-        for (User user: users) {
-            usersDTO.add(loginMapper.toUserDTO(user));
+        for (Login user: logins) {
+            loginDTO.add(loginMapper.toUserDTO(user));
         }
 
-        return usersDTO;
+        return loginDTO;
     }
     @Transactional
     public LoginDTO delete(Long id) {
@@ -77,21 +77,24 @@ public class LoginService {
 
     @Transactional(readOnly = true)
     public LoginDTO findById(Long id) {
-        Optional<User> user = loginRepository.findById(id);
+        Optional<Login> login = loginRepository.findById(id);
 
-        LoginDTO loginDTO = loginMapper.toOptionalDTO(user);
+        LoginDTO loginDTO = loginMapper.toOptionalDTO(login);
 
         return loginDTO;
     }
 
     @Transactional
     public LoginDTO update(LoginDTO loginDTO) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        if(!ValidateEmail.validate(loginDTO.getEmail())){
+            throw new LoginException(MessageUtil.INVALID_EMAIL);
+        }
         // Cria hash da senha
         String passSave = PasswordHash.passwordToHash(loginDTO.getPassword());
         loginDTO.setPassword(passSave);
 
-        User user = loginMapper.toUser(loginDTO);
-        loginRepository.save(user);
+        Login login = loginMapper.toUser(loginDTO);
+        loginRepository.save(login);
 
         return loginDTO;
     }

@@ -16,14 +16,14 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/user")
+@RequestMapping(value = "/api/v1/login")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class LoginController {
 
     private LoginService loginService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<LoginDTO> createUser(@Valid @RequestBody LoginDTO loginDTO) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public ResponseEntity<LoginDTO> create(@Valid @RequestBody LoginDTO loginDTO) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         return ResponseEntity.ok(loginService.save(loginDTO));
     }
 

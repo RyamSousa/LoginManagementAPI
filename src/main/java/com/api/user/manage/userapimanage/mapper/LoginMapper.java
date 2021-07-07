@@ -1,51 +1,52 @@
 package com.api.user.manage.userapimanage.mapper;
 
 import com.api.user.manage.userapimanage.dto.LoginDTO;
-import com.api.user.manage.userapimanage.entity.User;
+import com.api.user.manage.userapimanage.entity.Login;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+
 @Component
 public class LoginMapper {
 
-    public User toUser(LoginDTO loginDTO){
-        User user = new User();
+    public Login toUser(LoginDTO loginDTO){
+        Login login = new Login();
 
-        user.setId(loginDTO.getId());
-        user.setEmail(loginDTO.getEmail());
-        user.setPassword(loginDTO.getPassword());
+        login.setId(loginDTO.getId());
+        login.setEmail(loginDTO.getEmail());
+        login.setPassword(loginDTO.getPassword());
 
-        return user;
+        return login;
     }
 
-    public LoginDTO toUserDTO(User user){
+    public LoginDTO toUserDTO(Login login){
         LoginDTO loginDTO = new LoginDTO();
 
-        loginDTO.setId(user.getId());
-        loginDTO.setEmail(user.getEmail());
-        loginDTO.setPassword(user.getPassword());
+        loginDTO.setId(login.getId());
+        loginDTO.setEmail(login.getEmail());
+        loginDTO.setPassword(login.getPassword());
 
         return loginDTO;
     }
 
-    public LoginDTO toOptionalDTO(Optional<User> user) {
+    public LoginDTO toOptionalDTO(Optional<Login> login) {
         LoginDTO loginDTO = new LoginDTO();
 
-        loginDTO.setId(user.get().getId());
-        loginDTO.setEmail(user.get().getEmail());
-        loginDTO.setPassword(user.get().getPassword());
+        loginDTO.setId(login.get().getId());
+        loginDTO.setEmail(login.get().getEmail());
+        loginDTO.setPassword(login.get().getPassword());
 
         return loginDTO;
     }
 
-    public User toOptionalUser(Optional<User> userExists) {
-        User user = new User();
+    public Login toOptionalUser(Optional<Login> loginExists) {
+        Login login = new Login();
 
-        user.setId(userExists.get().getId());
-        user.setEmail(userExists.get().getEmail());
-        user.setPassword(userExists.get().getPassword());
+        login.setId(loginExists.get().getId());
+        login.setEmail(loginExists.get().getEmail());
+        login.setPassword(loginExists.get().getPassword());
 
-        return user;
+        return login;
     }
 }
